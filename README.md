@@ -1,4 +1,4 @@
-## Full-Stack Authentication Starter
+## SiteScope (An authenticated SEO audit platform that analyzes any website with PageSpeed Insights, on-page SEO checks, report history, PDF export, and Cloudinary-powered user profiles.)
 
 This project includes:
 
