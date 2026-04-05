@@ -4,7 +4,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { HistorySection } from '@/components/history-section';
-import { CircularScore, MetricCard, formatBytes, formatMilliseconds } from '@/components/report-ui';
+import {
+  CircularScore,
+  MetricCard,
+  formatBytes,
+  formatMilliseconds,
+} from '@/components/report-ui';
 import { useReportHistory } from '@/components/use-report-history';
 import { useAuth } from '@/components/auth-provider';
 
@@ -52,8 +57,8 @@ export function HistoryPageClient() {
             Revisit every report you&apos;ve already scanned.
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-            Open any saved audit, compare the latest scores, and clear old entries when you no
-            longer need them.
+            Open any saved audit, compare the latest scores, and clear old
+            entries when you no longer need them.
           </p>
         </section>
 
@@ -87,7 +92,10 @@ export function HistoryPageClient() {
                     </div>
 
                     <div className="grid gap-6 sm:grid-cols-2">
-                      <CircularScore label="Performance" score={report.performanceScore} />
+                      <CircularScore
+                        label="Performance"
+                        score={report.performanceScore}
+                      />
                       <CircularScore label="SEO" score={report.seoScore} />
                     </div>
                   </div>

@@ -37,7 +37,9 @@ export function AppHeader() {
     return null;
   }
 
-  async function handleAvatarUpload(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleAvatarUpload(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files?.[0];
 
     if (!file) {
@@ -49,11 +51,14 @@ export function AppHeader() {
     setIsUploadingAvatar(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/profile/avatar`, {
-        method: 'POST',
-        credentials: 'include',
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/profile/avatar`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        }
+      );
 
       const data = await response.json().catch(() => ({}));
 
@@ -78,7 +83,10 @@ export function AppHeader() {
     <header className="sticky top-0 z-50 border-b border-white/70 bg-[rgba(248,250,252,0.84)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <div className="flex items-center gap-4">
-          <Link href="/" className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-950">
+          <Link
+            href="/"
+            className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-950"
+          >
             SiteScope
           </Link>
 
@@ -86,7 +94,10 @@ export function AppHeader() {
             <Link href="/" className={navLinkClass(pathname === '/')}>
               Dashboard
             </Link>
-            <Link href="/history" className={navLinkClass(pathname === '/history')}>
+            <Link
+              href="/history"
+              className={navLinkClass(pathname === '/history')}
+            >
               History
             </Link>
           </nav>
@@ -132,9 +143,15 @@ export function AppHeader() {
                 )}
 
                 <div className="min-w-0">
-                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Profile</p>
-                  <h3 className="mt-2 truncate text-xl font-semibold text-slate-950">{user.name}</h3>
-                  <p className="mt-1 truncate text-sm text-slate-700">{user.email}</p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                    Profile
+                  </p>
+                  <h3 className="mt-2 truncate text-xl font-semibold text-slate-950">
+                    {user.name}
+                  </h3>
+                  <p className="mt-1 truncate text-sm text-slate-700">
+                    {user.email}
+                  </p>
                   <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
                     {user.provider} account
                   </p>
@@ -142,7 +159,9 @@ export function AppHeader() {
               </div>
 
               <label className="mt-5 block">
-                <span className="text-sm font-medium text-slate-950">Profile image</span>
+                <span className="text-sm font-medium text-slate-950">
+                  Profile image
+                </span>
                 <input
                   type="file"
                   accept="image/*"

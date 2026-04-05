@@ -1,0 +1,8 @@
+.git
+.next
+node_modules
+server/node_modules
+package-lock.json
+server/package-lock.json
+public
+app/favicon.ico

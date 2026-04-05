@@ -26,8 +26,8 @@ function OAuthButtons() {
         onClick={() => loginWithProvider('github')}
         className="flex flex-row gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-800 transition hover:border-amber-300 hover:bg-amber-50 text-xs"
       >
-        <Image src="/github.svg" alt='github-logo' width={20} height={20}/>
-       <p> Continue with GitHub</p>
+        <Image src="/github.svg" alt="github-logo" width={20} height={20} />
+        <p> Continue with GitHub</p>
       </button>
     </div>
   );
@@ -113,7 +113,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
               required
               value={fields.name}
               onChange={(event) =>
-                setFields((current) => ({ ...current, name: event.target.value }))
+                setFields((current) => ({
+                  ...current,
+                  name: event.target.value,
+                }))
               }
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
               placeholder="Alicia Rivera"
@@ -128,7 +131,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
             required
             value={fields.email}
             onChange={(event) =>
-              setFields((current) => ({ ...current, email: event.target.value }))
+              setFields((current) => ({
+                ...current,
+                email: event.target.value,
+              }))
             }
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
             placeholder="you@example.com"
@@ -143,10 +149,15 @@ export function AuthForm({ mode }: { mode: Mode }) {
             minLength={8}
             value={fields.password}
             onChange={(event) =>
-              setFields((current) => ({ ...current, password: event.target.value }))
+              setFields((current) => ({
+                ...current,
+                password: event.target.value,
+              }))
             }
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
-            placeholder={mode === 'login' ? 'Enter your password' : 'At least 8 characters'}
+            placeholder={
+              mode === 'login' ? 'Enter your password' : 'At least 8 characters'
+            }
             type="password"
           />
         </label>

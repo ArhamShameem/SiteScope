@@ -29,7 +29,9 @@ export function HistorySection({
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
             {description}
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-slate-950">{title}</h2>
+          <h2 className="mt-2 text-2xl font-semibold text-slate-950">
+            {title}
+          </h2>
         </div>
 
         <button
@@ -51,7 +53,8 @@ export function HistorySection({
 
         {!isHistoryLoading && history.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-600">
-            No saved reports yet. Run your first analysis and it will appear here.
+            No saved reports yet. Run your first analysis and it will appear
+            here.
           </div>
         ) : null}
 
@@ -61,8 +64,14 @@ export function HistorySection({
             className="rounded-[1.5rem] border border-slate-200 bg-slate-50/70 p-4"
           >
             <div className="flex items-start justify-between gap-4">
-              <button type="button" onClick={() => onSelect(item)} className="min-w-0 flex-1 text-left">
-                <p className="truncate text-sm font-semibold text-slate-950">{item.url}</p>
+              <button
+                type="button"
+                onClick={() => onSelect(item)}
+                className="min-w-0 flex-1 text-left"
+              >
+                <p className="truncate text-sm font-semibold text-slate-950">
+                  {item.url}
+                </p>
                 <p className="mt-1 text-xs text-slate-500">
                   {new Date(item.createdAt).toLocaleString()}
                 </p>
@@ -79,8 +88,16 @@ export function HistorySection({
             </div>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <CircularScore label="Performance" score={item.report.performanceScore} size={96} />
-              <CircularScore label="SEO" score={item.report.seoScore} size={96} />
+              <CircularScore
+                label="Performance"
+                score={item.report.performanceScore}
+                size={96}
+              />
+              <CircularScore
+                label="SEO"
+                score={item.report.seoScore}
+                size={96}
+              />
             </div>
           </div>
         ))}
