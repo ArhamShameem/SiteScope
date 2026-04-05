@@ -6,15 +6,13 @@ export default function LoginPage() {
       <div className="grid w-full max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <section className="space-y-6">
           <p className="inline-flex rounded-full border border-amber-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-amber-900 shadow-sm">
-            Full-stack authentication
+            SITE SCOPE
           </p>
           <h1 className="max-w-xl text-5xl font-semibold tracking-tight text-slate-950">
-            JWT cookies on the backend. Clean auth flows on the frontend.
+            Analyze your Site Performance
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
-            This starter combines a Next.js App Router frontend with an Express API,
-            MongoDB user storage, Passport OAuth strategies, and route protection on
-            both sides.
+           An authenticated SEO audit platform that analyzes any website with PageSpeed Insights, on-page SEO checks, report history, PDF export, and Cloudinary-powered user profiles
           </p>
         </section>
 

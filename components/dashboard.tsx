@@ -504,7 +504,7 @@ export function Dashboard() {
                         router.replace('/login');
                         router.refresh();
                       }}
-                      className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+                      className="w-full rounded-2xl bg-red-900 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
                     >
                       Logout
                     </button>
