@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/components/auth-provider';
 import { getInitials } from '@/components/report-ui';
 import { useOutsideClick } from '@/components/use-outside-click';
+import { apiFetch } from '@/lib/api';
+import type { User } from '@/lib/types';
 
 const HIDDEN_ROUTES = new Set(['/login', '/signup']);
 
@@ -51,22 +53,11 @@ export function AppHeader() {
     setIsUploadingAvatar(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/profile/avatar`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          body: formData,
-        }
-      );
-
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(data?.message || 'Unable to upload profile image.');
-      }
-
-      updateUser(data.user);
+      const response = await apiFetch<{ user: User }>('/api/profile/avatar', {
+        method: 'POST',
+        body: formData,
+      });
+      updateUser(response.user);
     } finally {
       setIsUploadingAvatar(false);
       event.target.value = '';

@@ -1,11 +1,9 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-
 type FetchOptions = Omit<RequestInit, 'headers'> & {
   headers?: Record<string, string>;
 };
 
 export function getApiUrl(path: string) {
-  return `${API_URL}${path}`;
+  return path;
 }
 
 export async function apiFetch<T>(
