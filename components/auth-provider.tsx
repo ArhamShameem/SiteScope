@@ -18,6 +18,9 @@ import type {
 } from '@/lib/types';
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+type AuthUserResponse = {
+  user: User;
+};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -27,7 +30,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
 
     try {
-      const response = await apiFetch('/api/auth/me', { method: 'GET' });
+      const response = await apiFetch<AuthUserResponse>('/api/auth/me', {
+        method: 'GET',
+      });
       setUser(response.user);
     } catch {
       setUser(null);
@@ -41,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [refreshUser]);
 
   const login = useCallback(async (payload: LoginPayload) => {
-    const response = await apiFetch('/api/auth/login', {
+    const response = await apiFetch<AuthUserResponse>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(payload),
     });
@@ -51,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signup = useCallback(async (payload: SignupPayload) => {
-    const response = await apiFetch('/api/auth/signup', {
+    const response = await apiFetch<AuthUserResponse>('/api/auth/signup', {
       method: 'POST',
       body: JSON.stringify(payload),
     });

@@ -1,4 +1,24 @@
+import { Suspense } from 'react';
+
 import { AuthForm } from '@/components/auth-form';
+
+function AuthFormFallback() {
+  return (
+    <div className="w-full max-w-md rounded-[2rem] border border-white/50 bg-white/80 p-8 shadow-[0_24px_80px_rgba(21,28,38,0.14)] backdrop-blur">
+      <div className="space-y-3">
+        <div className="h-6 w-32 rounded-full bg-slate-200" />
+        <div className="h-10 w-56 rounded-xl bg-slate-200" />
+        <div className="h-5 w-full rounded-xl bg-slate-100" />
+      </div>
+      <div className="mt-8 space-y-4">
+        <div className="h-12 rounded-2xl bg-slate-100" />
+        <div className="h-12 rounded-2xl bg-slate-100" />
+        <div className="h-12 rounded-2xl bg-slate-100" />
+        <div className="h-12 rounded-2xl bg-slate-200" />
+      </div>
+    </div>
+  );
+}
 
 export default function SignupPage() {
   return (
@@ -18,7 +38,9 @@ export default function SignupPage() {
           </p>
         </section>
 
-        <AuthForm mode="signup" />
+        <Suspense fallback={<AuthFormFallback />}>
+          <AuthForm mode="signup" />
+        </Suspense>
       </div>
     </main>
   );
