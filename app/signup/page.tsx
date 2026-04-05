@@ -12,8 +12,9 @@ export default function SignupPage() {
             Create an account once and support email, Google, or GitHub sign-in.
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
-            New users can register with email and password, while returning users can
-            continue with OAuth providers and land on the same protected home screen.
+            New users can register with email and password, while returning
+            users can continue with OAuth providers and land on the same
+            protected home screen.
           </p>
         </section>
 

@@ -12,7 +12,9 @@ export default function LoginPage() {
             Analyze your Site Performance
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-slate-600">
-           An authenticated SEO audit platform that analyzes any website with PageSpeed Insights, on-page SEO checks, report history, PDF export, and Cloudinary-powered user profiles
+            An authenticated SEO audit platform that analyzes any website with
+            PageSpeed Insights, on-page SEO checks, report history, PDF export,
+            and Cloudinary-powered user profiles
           </p>
         </section>
 

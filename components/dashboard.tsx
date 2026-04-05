@@ -102,8 +102,16 @@ function CircularScore({
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
-        <svg className="-rotate-90" width={size} height={size} aria-hidden="true">
+      <div
+        className="relative flex items-center justify-center"
+        style={{ width: size, height: size }}
+      >
+        <svg
+          className="-rotate-90"
+          width={size}
+          height={size}
+          aria-hidden="true"
+        >
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -126,7 +134,9 @@ function CircularScore({
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`text-4xl font-semibold ${palette.text}`}>{score}</span>
+          <span className={`text-4xl font-semibold ${palette.text}`}>
+            {score}
+          </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
             score
           </span>
@@ -218,9 +228,12 @@ export function Dashboard() {
       setIsHistoryLoading(true);
 
       try {
-        const response = await apiFetch<{ history: SavedReport[] }>('/api/analysis/history', {
-          method: 'GET',
-        });
+        const response = await apiFetch<{ history: SavedReport[] }>(
+          '/api/analysis/history',
+          {
+            method: 'GET',
+          }
+        );
         setHistory(response.history);
         setReport((current) => current || response.history[0]?.report || null);
       } catch {
@@ -260,13 +273,13 @@ export function Dashboard() {
     setIsSubmitting(true);
 
     try {
-      const response = await apiFetch<{ report: AnalysisReport; savedReport: SavedReport }>(
-        '/api/analysis',
-        {
-          method: 'POST',
-          body: JSON.stringify({ url }),
-        }
-      );
+      const response = await apiFetch<{
+        report: AnalysisReport;
+        savedReport: SavedReport;
+      }>('/api/analysis', {
+        method: 'POST',
+        body: JSON.stringify({ url }),
+      });
 
       setReport(response.report);
       setHistory((current) => [response.savedReport, ...current]);
@@ -375,7 +388,9 @@ export function Dashboard() {
     }
   }
 
-  async function handleAvatarUpload(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleAvatarUpload(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files?.[0];
 
     if (!file) {
@@ -415,8 +430,8 @@ export function Dashboard() {
                 SEO analysis dashboard
               </span>
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Analyze any website and turn PageSpeed plus on-page SEO signals into
-                one clean report.
+                Analyze any website and turn PageSpeed plus on-page SEO signals
+                into one clean report.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300">
                 Submit a URL to inspect performance, Core Web Vitals, title/meta
@@ -464,11 +479,15 @@ export function Dashboard() {
                       </div>
                     )}
                     <div className="min-w-0">
-                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Profile</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+                        Profile
+                      </p>
                       <h3 className="mt-2 truncate text-xl font-semibold text-white">
                         {user.name}
                       </h3>
-                      <p className="mt-1 truncate text-sm text-slate-300">{user.email}</p>
+                      <p className="mt-1 truncate text-sm text-slate-300">
+                        {user.email}
+                      </p>
                       <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
                         {user.provider} account
                       </p>
@@ -489,12 +508,14 @@ export function Dashboard() {
                     </label>
 
                     <p className="text-xs leading-5 text-slate-400">
-                      Upload a square image for the best avatar result. Files are stored
-                      in Cloudinary.
+                      Upload a square image for the best avatar result. Files
+                      are stored in Cloudinary.
                     </p>
 
                     <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200">
-                      {isUploadingAvatar ? 'Uploading avatar...' : 'Avatar upload ready'}
+                      {isUploadingAvatar
+                        ? 'Uploading avatar...'
+                        : 'Avatar upload ready'}
                     </div>
 
                     <button
@@ -528,7 +549,9 @@ export function Dashboard() {
 
             <form className="space-y-4" onSubmit={handleAnalyze}>
               <label className="block space-y-2">
-                <span className="text-sm font-medium text-slate-700">Website URL</span>
+                <span className="text-sm font-medium text-slate-700">
+                  Website URL
+                </span>
                 <input
                   type="text"
                   value={url}
@@ -603,7 +626,8 @@ export function Dashboard() {
 
               {!isHistoryLoading && history.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-600">
-                  No saved reports yet. Run your first analysis and it will appear here.
+                  No saved reports yet. Run your first analysis and it will
+                  appear here.
                 </div>
               ) : null}
 
@@ -640,8 +664,16 @@ export function Dashboard() {
                   </div>
 
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <CircularScore label="Performance" score={item.report.performanceScore} size={96} />
-                    <CircularScore label="SEO" score={item.report.seoScore} size={96} />
+                    <CircularScore
+                      label="Performance"
+                      score={item.report.performanceScore}
+                      size={96}
+                    />
+                    <CircularScore
+                      label="SEO"
+                      score={item.report.seoScore}
+                      size={96}
+                    />
                   </div>
                 </div>
               ))}
@@ -677,7 +709,10 @@ export function Dashboard() {
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <CircularScore label="Performance" score={report.performanceScore} />
+                  <CircularScore
+                    label="Performance"
+                    score={report.performanceScore}
+                  />
                   <CircularScore label="SEO" score={report.seoScore} />
                 </div>
               </div>
@@ -725,19 +760,26 @@ export function Dashboard() {
                 </p>
                 <div className="mt-5 space-y-5">
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-950">Title tag</h3>
+                    <h3 className="text-sm font-semibold text-slate-950">
+                      Title tag
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-slate-600">
                       {report.overview.title || 'No title tag detected.'}
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-950">Meta description</h3>
+                    <h3 className="text-sm font-semibold text-slate-950">
+                      Meta description
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {report.overview.metaDescription || 'No meta description detected.'}
+                      {report.overview.metaDescription ||
+                        'No meta description detected.'}
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-950">Headings</h3>
+                    <h3 className="text-sm font-semibold text-slate-950">
+                      Headings
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-slate-600">
                       H1: {report.overview.headingStructure.h1.length} | H2:{' '}
                       {report.overview.headingStructure.h2.length}
@@ -755,16 +797,17 @@ export function Dashboard() {
                 <ul className="mt-5 space-y-3">
                   {(report.issues.length
                     ? report.issues
-                    : ['No major SEO issues were detected in the implemented checks.']).map(
-                    (issue) => (
-                      <li
-                        key={issue}
-                        className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900"
-                      >
-                        {issue}
-                      </li>
-                    )
-                  )}
+                    : [
+                        'No major SEO issues were detected in the implemented checks.',
+                      ]
+                  ).map((issue) => (
+                    <li
+                      key={issue}
+                      className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900"
+                    >
+                      {issue}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
@@ -775,16 +818,17 @@ export function Dashboard() {
                 <ul className="mt-5 space-y-3">
                   {(report.suggestions.length
                     ? report.suggestions
-                    : ['This page looks healthy in the current rule set. Keep monitoring Core Web Vitals over time.']).map(
-                    (suggestion) => (
-                      <li
-                        key={suggestion}
-                        className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900"
-                      >
-                        {suggestion}
-                      </li>
-                    )
-                  )}
+                    : [
+                        'This page looks healthy in the current rule set. Keep monitoring Core Web Vitals over time.',
+                      ]
+                  ).map((suggestion) => (
+                    <li
+                      key={suggestion}
+                      className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900"
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </section>
@@ -808,7 +852,9 @@ export function Dashboard() {
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600">
                       {audit.label}
                     </p>
-                    <p className="mt-3 text-sm leading-6 text-slate-800">{audit.details}</p>
+                    <p className="mt-3 text-sm leading-6 text-slate-800">
+                      {audit.details}
+                    </p>
                   </div>
                 ))}
               </div>

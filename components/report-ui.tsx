@@ -73,8 +73,16 @@ export function CircularScore({
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
-        <svg className="-rotate-90" width={size} height={size} aria-hidden="true">
+      <div
+        className="relative flex items-center justify-center"
+        style={{ width: size, height: size }}
+      >
+        <svg
+          className="-rotate-90"
+          width={size}
+          height={size}
+          aria-hidden="true"
+        >
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -97,7 +105,9 @@ export function CircularScore({
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`text-4xl font-semibold ${palette.text}`}>{score}</span>
+          <span className={`text-4xl font-semibold ${palette.text}`}>
+            {score}
+          </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
             score
           </span>

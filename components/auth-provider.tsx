@@ -10,7 +10,12 @@ import {
 } from 'react';
 
 import { apiFetch, getApiUrl } from '@/lib/api';
-import type { AuthContextValue, LoginPayload, SignupPayload, User } from '@/lib/types';
+import type {
+  AuthContextValue,
+  LoginPayload,
+  SignupPayload,
+  User,
+} from '@/lib/types';
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -78,7 +83,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       updateUser,
       loginWithProvider,
     }),
-    [isLoading, login, loginWithProvider, logout, refreshUser, signup, updateUser, user]
+    [
+      isLoading,
+      login,
+      loginWithProvider,
+      logout,
+      refreshUser,
+      signup,
+      updateUser,
+      user,
+    ]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

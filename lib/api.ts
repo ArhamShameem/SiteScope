@@ -8,8 +8,12 @@ export function getApiUrl(path: string) {
   return `${API_URL}${path}`;
 }
 
-export async function apiFetch<T>(path: string, options: FetchOptions = {}): Promise<T> {
-  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+export async function apiFetch<T>(
+  path: string,
+  options: FetchOptions = {}
+): Promise<T> {
+  const isFormData =
+    typeof FormData !== 'undefined' && options.body instanceof FormData;
 
   const response = await fetch(getApiUrl(path), {
     ...options,

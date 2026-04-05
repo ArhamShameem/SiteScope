@@ -42,7 +42,10 @@ const uploadAvatar = asyncHandler(async (req, res) => {
     throw error;
   }
 
-  const uploadResult = await uploadToCloudinary(req.file.buffer, req.user._id.toString());
+  const uploadResult = await uploadToCloudinary(
+    req.file.buffer,
+    req.user._id.toString()
+  );
 
   req.user.avatarUrl = uploadResult.secure_url;
   await req.user.save();

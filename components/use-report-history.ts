@@ -20,9 +20,12 @@ export function useReportHistory(enabled: boolean) {
       setIsHistoryLoading(true);
 
       try {
-        const response = await apiFetch<{ history: SavedReport[] }>('/api/analysis/history', {
-          method: 'GET',
-        });
+        const response = await apiFetch<{ history: SavedReport[] }>(
+          '/api/analysis/history',
+          {
+            method: 'GET',
+          }
+        );
 
         setHistory(response.history);
         setReport((current) => current || response.history[0]?.report || null);

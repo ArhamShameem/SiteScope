@@ -5,7 +5,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/components/auth-provider';
-import { CircularScore, MetricCard, formatBytes, formatMilliseconds } from '@/components/report-ui';
+import {
+  CircularScore,
+  MetricCard,
+  formatBytes,
+  formatMilliseconds,
+} from '@/components/report-ui';
 import { useReportHistory } from '@/components/use-report-history';
 import { apiFetch } from '@/lib/api';
 import type { AnalysisReport, SavedReport } from '@/lib/types';
@@ -102,7 +107,9 @@ export function DashboardHome() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExportingPdf, setIsExportingPdf] = useState(false);
-  const { history, report, setReport, prependHistoryItem } = useReportHistory(Boolean(user));
+  const { history, report, setReport, prependHistoryItem } = useReportHistory(
+    Boolean(user)
+  );
 
   const summaryCards = useMemo(() => {
     if (!report) {
@@ -166,13 +173,13 @@ export function DashboardHome() {
     setIsSubmitting(true);
 
     try {
-      const response = await apiFetch<{ report: AnalysisReport; savedReport: SavedReport }>(
-        '/api/analysis',
-        {
-          method: 'POST',
-          body: JSON.stringify({ url }),
-        }
-      );
+      const response = await apiFetch<{
+        report: AnalysisReport;
+        savedReport: SavedReport;
+      }>('/api/analysis', {
+        method: 'POST',
+        body: JSON.stringify({ url }),
+      });
 
       setReport(response.report);
       prependHistoryItem(response.savedReport);
@@ -200,7 +207,10 @@ export function DashboardHome() {
 
       writer.writeHeading('SEO Analysis Report');
       writer.writeLabelValue('URL', report.url);
-      writer.writeLabelValue('Scanned at', new Date(report.scannedAt).toLocaleString());
+      writer.writeLabelValue(
+        'Scanned at',
+        new Date(report.scannedAt).toLocaleString()
+      );
       writer.writeLabelValue('Performance score', `${report.performanceScore}`);
       writer.writeLabelValue('SEO score', `${report.seoScore}`);
       writer.writeLabelValue(
@@ -210,32 +220,67 @@ export function DashboardHome() {
       writer.addGap();
 
       writer.writeHeading('Overview');
-      writer.writeLabelValue('Load time', formatMilliseconds(report.overview.loadTimeMs));
-      writer.writeLabelValue('Page size', formatBytes(report.overview.pageSizeBytes));
+      writer.writeLabelValue(
+        'Load time',
+        formatMilliseconds(report.overview.loadTimeMs)
+      );
+      writer.writeLabelValue(
+        'Page size',
+        formatBytes(report.overview.pageSizeBytes)
+      );
       writer.writeLabelValue('Image count', `${report.overview.imageCount}`);
-      writer.writeLabelValue('Missing alt text', `${report.overview.imagesWithoutAlt}`);
-      writer.writeLabelValue('Title tag', report.overview.title || 'No title tag detected.');
+      writer.writeLabelValue(
+        'Missing alt text',
+        `${report.overview.imagesWithoutAlt}`
+      );
+      writer.writeLabelValue(
+        'Title tag',
+        report.overview.title || 'No title tag detected.'
+      );
       writer.writeLabelValue(
         'Meta description',
         report.overview.metaDescription || 'No meta description detected.'
       );
-      writer.writeLabelValue('Heading count', `H1: ${report.overview.headingStructure.h1.length}`);
-      writer.writeLabelValue('Heading count', `H2: ${report.overview.headingStructure.h2.length}`);
+      writer.writeLabelValue(
+        'Heading count',
+        `H1: ${report.overview.headingStructure.h1.length}`
+      );
+      writer.writeLabelValue(
+        'Heading count',
+        `H2: ${report.overview.headingStructure.h2.length}`
+      );
       writer.addGap();
 
       writer.writeHeading('Core Web Vitals');
-      writer.writeLabelValue('LCP', formatMilliseconds(report.coreWebVitals.lcp));
-      writer.writeLabelValue('FCP', formatMilliseconds(report.coreWebVitals.fcp));
-      writer.writeLabelValue('CLS', report.coreWebVitals.cls?.toFixed(2) || 'N/A');
-      writer.writeLabelValue('INP', formatMilliseconds(report.coreWebVitals.inp));
-      writer.writeLabelValue('TTFB', formatMilliseconds(report.coreWebVitals.ttfb));
+      writer.writeLabelValue(
+        'LCP',
+        formatMilliseconds(report.coreWebVitals.lcp)
+      );
+      writer.writeLabelValue(
+        'FCP',
+        formatMilliseconds(report.coreWebVitals.fcp)
+      );
+      writer.writeLabelValue(
+        'CLS',
+        report.coreWebVitals.cls?.toFixed(2) || 'N/A'
+      );
+      writer.writeLabelValue(
+        'INP',
+        formatMilliseconds(report.coreWebVitals.inp)
+      );
+      writer.writeLabelValue(
+        'TTFB',
+        formatMilliseconds(report.coreWebVitals.ttfb)
+      );
       writer.addGap();
 
       writer.writeList('Issues', report.issues);
       writer.writeList('Suggestions', report.suggestions);
       writer.writeList(
         'Audit checks',
-        report.audits.map((audit) => `${audit.label} (${audit.status}): ${audit.details}`)
+        report.audits.map(
+          (audit) => `${audit.label} (${audit.status}): ${audit.details}`
+        )
       );
 
       const hostname = new URL(report.url).hostname.replace(/\./g, '-');
@@ -255,8 +300,8 @@ export function DashboardHome() {
                 SEO analysis dashboard
               </span>
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Analyze any website and turn PageSpeed plus on-page SEO signals into
-                one clean report.
+                Analyze any website and turn PageSpeed plus on-page SEO signals
+                into one clean report.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300">
                 Submit a URL to inspect performance, Core Web Vitals, title/meta
@@ -269,7 +314,9 @@ export function DashboardHome() {
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
                 Workspace
               </p>
-              <p className="mt-3 text-2xl font-semibold text-white">{history.length}</p>
+              <p className="mt-3 text-2xl font-semibold text-white">
+                {history.length}
+              </p>
               <p className="mt-2 text-sm leading-6 text-slate-300">
                 saved reports are available in the history page.
               </p>
@@ -287,8 +334,8 @@ export function DashboardHome() {
                 Paste a website and generate a fresh SEO report.
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-                Each run stores a copy in your history, so you can revisit previous scans
-                without cluttering the dashboard.
+                Each run stores a copy in your history, so you can revisit
+                previous scans without cluttering the dashboard.
               </p>
             </div>
 
@@ -302,7 +349,10 @@ export function DashboardHome() {
             </button>
           </div>
 
-          <form className="mt-8 grid gap-4 lg:grid-cols-[1fr_auto]" onSubmit={handleAnalyze}>
+          <form
+            className="mt-8 grid gap-4 lg:grid-cols-[1fr_auto]"
+            onSubmit={handleAnalyze}
+          >
             <label className="block">
               <span className="sr-only">Website URL</span>
               <input
@@ -359,7 +409,10 @@ export function DashboardHome() {
                   </div>
 
                   <div className="grid gap-6 sm:grid-cols-2">
-                    <CircularScore label="Performance" score={report.performanceScore} />
+                    <CircularScore
+                      label="Performance"
+                      score={report.performanceScore}
+                    />
                     <CircularScore label="SEO" score={report.seoScore} />
                   </div>
                 </div>
@@ -407,19 +460,26 @@ export function DashboardHome() {
                   </p>
                   <div className="mt-5 space-y-5">
                     <div>
-                      <h3 className="text-sm font-semibold text-slate-950">Title tag</h3>
+                      <h3 className="text-sm font-semibold text-slate-950">
+                        Title tag
+                      </h3>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
                         {report.overview.title || 'No title tag detected.'}
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold text-slate-950">Meta description</h3>
+                      <h3 className="text-sm font-semibold text-slate-950">
+                        Meta description
+                      </h3>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
-                        {report.overview.metaDescription || 'No meta description detected.'}
+                        {report.overview.metaDescription ||
+                          'No meta description detected.'}
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold text-slate-950">Headings</h3>
+                      <h3 className="text-sm font-semibold text-slate-950">
+                        Headings
+                      </h3>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
                         H1: {report.overview.headingStructure.h1.length} | H2:{' '}
                         {report.overview.headingStructure.h2.length}
@@ -437,16 +497,17 @@ export function DashboardHome() {
                   <ul className="mt-5 space-y-3">
                     {(report.issues.length
                       ? report.issues
-                      : ['No major SEO issues were detected in the implemented checks.']).map(
-                      (issue) => (
-                        <li
-                          key={issue}
-                          className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900"
-                        >
-                          {issue}
-                        </li>
-                      )
-                    )}
+                      : [
+                          'No major SEO issues were detected in the implemented checks.',
+                        ]
+                    ).map((issue) => (
+                      <li
+                        key={issue}
+                        className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-900"
+                      >
+                        {issue}
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -457,16 +518,17 @@ export function DashboardHome() {
                   <ul className="mt-5 space-y-3">
                     {(report.suggestions.length
                       ? report.suggestions
-                      : ['This page looks healthy in the current rule set. Keep monitoring Core Web Vitals over time.']).map(
-                      (suggestion) => (
-                        <li
-                          key={suggestion}
-                          className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900"
-                        >
-                          {suggestion}
-                        </li>
-                      )
-                    )}
+                      : [
+                          'This page looks healthy in the current rule set. Keep monitoring Core Web Vitals over time.',
+                        ]
+                    ).map((suggestion) => (
+                      <li
+                        key={suggestion}
+                        className="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-900"
+                      >
+                        {suggestion}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </section>
@@ -490,7 +552,9 @@ export function DashboardHome() {
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-600">
                         {audit.label}
                       </p>
-                      <p className="mt-3 text-sm leading-6 text-slate-800">{audit.details}</p>
+                      <p className="mt-3 text-sm leading-6 text-slate-800">
+                        {audit.details}
+                      </p>
                     </div>
                   ))}
                 </div>

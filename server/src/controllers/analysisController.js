@@ -126,41 +126,59 @@ function createRecommendations(parsed, lighthouse) {
   const recommendations = [];
 
   if (!parsed.title) {
-    recommendations.push('Add a descriptive title tag so search engines can understand the page.');
+    recommendations.push(
+      'Add a descriptive title tag so search engines can understand the page.'
+    );
   } else if (
     parsed.title.length < TITLE_RECOMMENDED_MIN ||
     parsed.title.length > TITLE_RECOMMENDED_MAX
   ) {
-    recommendations.push('Keep the title tag between 30 and 60 characters for better SERP display.');
+    recommendations.push(
+      'Keep the title tag between 30 and 60 characters for better SERP display.'
+    );
   }
 
   if (!parsed.metaDescription) {
-    recommendations.push('Add a meta description to improve click-through rate from search results.');
+    recommendations.push(
+      'Add a meta description to improve click-through rate from search results.'
+    );
   } else if (
     parsed.metaDescription.length < META_RECOMMENDED_MIN ||
     parsed.metaDescription.length > META_RECOMMENDED_MAX
   ) {
-    recommendations.push('Keep the meta description between 70 and 160 characters.');
+    recommendations.push(
+      'Keep the meta description between 70 and 160 characters.'
+    );
   }
 
   if (parsed.headings.h1.length !== 1) {
-    recommendations.push('Use exactly one H1 heading to define the main topic of the page.');
+    recommendations.push(
+      'Use exactly one H1 heading to define the main topic of the page.'
+    );
   }
 
   if (parsed.imagesWithoutAlt > 0) {
-    recommendations.push('Add meaningful alt text to images for accessibility and image SEO.');
+    recommendations.push(
+      'Add meaningful alt text to images for accessibility and image SEO.'
+    );
   }
 
   if ((lighthouse?.['largest-contentful-paint']?.numericValue || 0) > 2500) {
-    recommendations.push('Improve Largest Contentful Paint by reducing render-blocking resources and optimizing media.');
+    recommendations.push(
+      'Improve Largest Contentful Paint by reducing render-blocking resources and optimizing media.'
+    );
   }
 
   if ((lighthouse?.['cumulative-layout-shift']?.numericValue || 0) > 0.1) {
-    recommendations.push('Reduce layout shifts by reserving space for images, embeds, and dynamic content.');
+    recommendations.push(
+      'Reduce layout shifts by reserving space for images, embeds, and dynamic content.'
+    );
   }
 
   if ((lighthouse?.['server-response-time']?.numericValue || 0) > 600) {
-    recommendations.push('Reduce server response time to improve load speed and crawl efficiency.');
+    recommendations.push(
+      'Reduce server response time to improve load speed and crawl efficiency.'
+    );
   }
 
   return recommendations;
@@ -175,7 +193,9 @@ function formatMetric(metric, transform = (value) => value) {
 }
 
 async function fetchPageSpeed(url) {
-  const endpoint = new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed');
+  const endpoint = new URL(
+    'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
+  );
   endpoint.searchParams.set('url', url);
   endpoint.searchParams.set('category', 'performance');
   endpoint.searchParams.append('category', 'seo');
@@ -205,7 +225,9 @@ async function fetchHtml(url) {
   });
 
   if (!response.ok) {
-    const error = new Error(`Failed to fetch website HTML (${response.status})`);
+    const error = new Error(
+      `Failed to fetch website HTML (${response.status})`
+    );
     error.statusCode = 502;
     throw error;
   }
@@ -213,13 +235,24 @@ async function fetchHtml(url) {
   return response.text();
 }
 
-function createReportPayload(normalizedUrl, parsedHtml, lighthouse, categories, loadingExperience) {
-  const performanceScore = Math.round((categories.performance?.score || 0) * 100);
+function createReportPayload(
+  normalizedUrl,
+  parsedHtml,
+  lighthouse,
+  categories,
+  loadingExperience
+) {
+  const performanceScore = Math.round(
+    (categories.performance?.score || 0) * 100
+  );
   const pageSpeedSeoScore = Math.round((categories.seo?.score || 0) * 100);
 
   const contentSeoScore = Math.round(
-    (
-      scoreMetaPresence(parsedHtml.title, TITLE_RECOMMENDED_MIN, TITLE_RECOMMENDED_MAX) +
+    (scoreMetaPresence(
+      parsedHtml.title,
+      TITLE_RECOMMENDED_MIN,
+      TITLE_RECOMMENDED_MAX
+    ) +
       scoreMetaPresence(
         parsedHtml.metaDescription,
         META_RECOMMENDED_MIN,
@@ -228,8 +261,8 @@ function createReportPayload(normalizedUrl, parsedHtml, lighthouse, categories, 
       (parsedHtml.headings.h1.length === 1 ? 100 : 50) +
       (parsedHtml.imagesWithoutAlt === 0
         ? 100
-        : Math.max(40, 100 - parsedHtml.imagesWithoutAlt * 12))
-    ) / 4
+        : Math.max(40, 100 - parsedHtml.imagesWithoutAlt * 12))) /
+      4
   );
 
   const seoScore = Math.round((pageSpeedSeoScore + contentSeoScore) / 2);
@@ -254,7 +287,9 @@ function createReportPayload(normalizedUrl, parsedHtml, lighthouse, categories, 
       imagesWithoutAlt: parsedHtml.imagesWithoutAlt,
       pageSizeBytes: parsedHtml.pageSizeBytes,
       loadTimeMs:
-        lighthouse.interactive?.numericValue || lighthouse['speed-index']?.numericValue || null,
+        lighthouse.interactive?.numericValue ||
+        lighthouse['speed-index']?.numericValue ||
+        null,
     },
     coreWebVitals: {
       lcp: formatMetric(
@@ -262,8 +297,9 @@ function createReportPayload(normalizedUrl, parsedHtml, lighthouse, categories, 
           lighthouse['largest-contentful-paint']?.numericValue,
         (value) => Math.round(value)
       ),
-      fcp: formatMetric(lighthouse['first-contentful-paint']?.numericValue, (value) =>
-        Math.round(value)
+      fcp: formatMetric(
+        lighthouse['first-contentful-paint']?.numericValue,
+        (value) => Math.round(value)
       ),
       cls: formatMetric(
         loadingExperience.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile
