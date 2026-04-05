@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 
 import { AuthCard } from '@/components/auth-card';
 import { useAuth } from '@/components/auth-provider';
+import Image from 'next/image';
 
 function OAuthButtons() {
   const { loginWithProvider } = useAuth();
@@ -15,16 +16,18 @@ function OAuthButtons() {
       <button
         type="button"
         onClick={() => loginWithProvider('google')}
-        className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 transition hover:border-amber-300 hover:bg-amber-50"
+        className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-800 transition hover:border-amber-300 hover:bg-amber-50 text-xs"
       >
+        <Image src="/google.svg" alt="Google icon" width={20} height={20} />
         Continue with Google
       </button>
       <button
         type="button"
         onClick={() => loginWithProvider('github')}
-        className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 transition hover:border-amber-300 hover:bg-amber-50"
+        className="flex flex-row gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-800 transition hover:border-amber-300 hover:bg-amber-50 text-xs"
       >
-        Continue with GitHub
+        <Image src="/github.svg" alt='github-logo' width={20} height={20}/>
+       <p> Continue with GitHub</p>
       </button>
     </div>
   );
@@ -189,28 +192,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
 
       <OAuthButtons />
 
-      <div className="mt-6 text-xs leading-5 text-slate-500">
-        Protected areas redirect automatically. JWT tokens stay in HTTP-only cookies
-        so they are not exposed to client-side JavaScript.
-      </div>
-
       {mode === 'login' ? null : (
         <p className="mt-4 text-xs text-slate-500">
           By creating an account, you agree to your app&apos;s terms and privacy
           settings.
         </p>
       )}
-
-      <div className="mt-5 text-xs text-slate-500">
-        OAuth callback errors will return you here automatically.
-      </div>
-
-      <div className="mt-6 text-sm text-slate-500">
-        Need a quick switch?{' '}
-        <Link href={mode === 'login' ? '/signup' : '/login'} className="underline">
-          {mode === 'login' ? 'Sign up instead' : 'Log in instead'}
-        </Link>
-      </div>
     </AuthCard>
   );
 }
