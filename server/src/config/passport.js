@@ -4,7 +4,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 
 const User = require('../models/User');
 
-const appUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
 
 async function findOrCreateOAuthUser(profile, provider) {
   const email = profile.emails?.[0]?.value;
@@ -32,7 +32,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      callbackURL: `${appUrl}/api/auth/google/callback`,
+      callbackURL: `${backendUrl}/api/auth/google/callback`,
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
@@ -50,7 +50,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-      callbackURL: `${appUrl}/api/auth/github/callback`,
+      callbackURL: `${backendUrl}/api/auth/github/callback`,
       scope: ['user:email'],
     },
     async (_accessToken, _refreshToken, profile, done) => {
